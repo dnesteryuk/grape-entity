@@ -95,14 +95,15 @@ module Grape
       private
 
       def build_for_nesting(key)
-        Options.new(
-          opts_hash.dup.reject { |current_key| current_key == :collection }.merge(
-            root: nil,
-            only: only_fields(key),
-            except: except_fields(key),
-            attr_path: opts_hash[:attr_path]
-          )
+        new_opts = opts_hash.reject { |current_key| current_key == :collection }
+        new_opts.merge!(
+          root: nil,
+          only: only_fields(key),
+          except: except_fields(key),
+          attr_path: opts_hash[:attr_path]
         )
+
+        Options.new(new_opts)
       end
 
       def build_symbolized_hash(attribute, hash)
