@@ -71,11 +71,7 @@ module Grape
         end
 
         def easy_normalized_exposures(entity, options)
-          nested_exposures.select do |exposure|
-            exposure.with_attr_path(entity, options) do
-              exposure.should_expose?(entity, options)
-            end
-          end
+          nested_exposures.select { |exposure| exposure.should_expose?(entity, options) }
         end
 
         # This method 'merges' subsequent nesting exposures with the same name if it's needed
